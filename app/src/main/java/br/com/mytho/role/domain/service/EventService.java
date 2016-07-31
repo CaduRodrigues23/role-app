@@ -1,6 +1,9 @@
 package br.com.mytho.role.domain.service;
 
 import android.content.Context;
+import android.support.v4.content.LocalBroadcastManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +62,19 @@ public interface EventService {
                     return chain.proceed(request);
                 }
             });
+
+//            httpClient.addInterceptor(new Interceptor() {
+//                @Override
+//                public Response intercept(Chain chain) throws IOException {
+//                        Response response = chain.proceed(chain.request());
+//
+//                        if(response.code() == 401) {
+//
+//                        }
+//                    return response;
+//                }
+//            });
+
 
             Retrofit retrofit = builder.client(httpClient.build()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
             return retrofit.create(EventService.class);

@@ -1,13 +1,18 @@
 package br.com.mytho.role.facade;
 
 import android.content.Context;
+import android.os.Handler;
+import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 import br.com.mytho.role.activity.delegate.AccessTokenDelegate;
 import br.com.mytho.role.security.OAuthAccessTokenService;
 import br.com.mytho.role.security.model.AccessToken;
 import br.com.mytho.role.security.model.repository.AccessTokenRepository;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -33,7 +38,7 @@ public class AccessTokenFacade {
 
     public void getAccessToken() {
         if (tokenRepository.empty()) {
-            OAuthAccessTokenService oAuthAccessTokenService = new OAuthAccessTokenService.Builder().build();
+            final OAuthAccessTokenService oAuthAccessTokenService = new OAuthAccessTokenService.Builder().build();
 
             oAuthAccessTokenService.getAccessToken(OAuthAccessTokenService.PUBLIC_SCOPE)
                                     .subscribeOn(Schedulers.io())
@@ -55,12 +60,20 @@ public class AccessTokenFacade {
                                                         getAccessToken();
                                                     }
                                                 });
+                                            } else {
+                                                getAccessToken();
+
                                             }
                                         }
                                     });
         } else {
             accessTokenDelegate.onReceiveAccessToken();
         }
+    }
+
+    public void retry() {
+        tokenRepository.clear();
+        getAccessToken();
     }
 
 }

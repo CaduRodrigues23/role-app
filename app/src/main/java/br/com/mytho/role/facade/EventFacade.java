@@ -1,13 +1,19 @@
 package br.com.mytho.role.facade;
 
 import android.content.Context;
+import android.os.Handler;
+import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
 
 import br.com.mytho.role.activity.delegate.EventDelegate;
 import br.com.mytho.role.domain.service.EventService;
 import br.com.mytho.role.model.Event;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -40,14 +46,18 @@ public class EventFacade {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                    if (throwable instanceof UnknownHostException) {
-                        dialogUtils.showConnectionError(new DialogUtils.OnRetryListener() {
-                            @Override
-                            public void onRetry() {
-                                getEvents();
-                            }
-                        });
-                    }
+                        if (throwable instanceof UnknownHostException) {
+                            dialogUtils.showConnectionError(new DialogUtils.OnRetryListener() {
+                                @Override
+                                public void onRetry() {
+                                    getEvents();
+                                }
+                            });
+                        } else if(throwable.getMessage().contains("401")){
+                            EventBus.getDefault().post(throwable);
+                        } else {
+                            getEvents();
+                        }
                     }
                 });
     }

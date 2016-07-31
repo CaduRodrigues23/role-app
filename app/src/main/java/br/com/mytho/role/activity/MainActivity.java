@@ -19,6 +19,9 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements AccessTokenDelega
         setupToolbar();
         setupNavigationDrawer();
 
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe
+    public void handleUnauthorize(Throwable t) {
+        accessTokenFacade.retry();
     }
 
     @Override
