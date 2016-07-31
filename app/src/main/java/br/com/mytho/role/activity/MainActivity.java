@@ -1,10 +1,8 @@
 package br.com.mytho.role.activity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,24 +72,11 @@ public class MainActivity extends AppCompatActivity implements AccessTokenDelega
         eventFacade.getEvents();
     }
 
-    @Override
-    public void onErrorInRetrievingAccessToken(Throwable t) {
-        /* TODO: implements a error handling mechanism with chain of responsability */
-        if(t instanceof UnknownHostException)
-            showConnectionErrorDialog();
-    }
 
     @Override
     public void onEvents(List<Event> events) {
         this.events = (ArrayList<Event>) events;
         setupViewPager();
-    }
-
-    @Override
-    public void onErrorInRetrievingEvents(Throwable t) {
-        /* TODO: implements a error handling mechanism with chain of responsability */
-        if(t instanceof UnknownHostException)
-            showConnectionErrorDialog();
     }
 
     private void setupToolbar() {
@@ -179,18 +163,4 @@ public class MainActivity extends AppCompatActivity implements AccessTokenDelega
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-    private void showConnectionErrorDialog() {
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-
-                /* TODO: extract strings to strings.xml */
-                .setMessage("Não foi possível contactar o servidor, verifique seu acesso a Internet")
-                .setTitle("Sem conexão")
-                .setPositiveButton("Tentar novamente", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        accessTokenFacade.getAccessToken();
-                    }
-                }).create().show();
-    }
 }

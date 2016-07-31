@@ -11,5 +11,5 @@ import br.com.mytho.role.model.Event;
 public interface EventDelegate {
 
     void onEvents(List<Event> events);
-    void onErrorInRetrievingEvents(Throwable t);
+
 }

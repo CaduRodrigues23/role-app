@@ -2,6 +2,8 @@ package br.com.mytho.role.facade;
 
 import android.content.Context;
 
+import java.net.UnknownHostException;
+
 import br.com.mytho.role.activity.delegate.AccessTokenDelegate;
 import br.com.mytho.role.security.OAuthAccessTokenService;
 import br.com.mytho.role.security.model.AccessToken;
@@ -9,6 +11,7 @@ import br.com.mytho.role.security.model.repository.AccessTokenRepository;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import utils.DialogUtils;
 
 /**
  * Created by leonardocordeiro on 21/07/16.
@@ -18,10 +21,14 @@ public class AccessTokenFacade {
 
     private AccessTokenRepository tokenRepository;
     private AccessTokenDelegate accessTokenDelegate;
+    private DialogUtils dialogUtils;
 
     public AccessTokenFacade(AccessTokenDelegate accessTokenDelegate) {
         this.accessTokenDelegate = accessTokenDelegate;
-        this.tokenRepository = new AccessTokenRepository((Context) accessTokenDelegate);
+
+        Context context = (Context) accessTokenDelegate;
+        this.tokenRepository = new AccessTokenRepository(context);
+        this.dialogUtils = new DialogUtils(context);
     }
 
     public void getAccessToken() {
@@ -29,7 +36,6 @@ public class AccessTokenFacade {
             OAuthAccessTokenService oAuthAccessTokenService = new OAuthAccessTokenService.Builder().build();
 
             oAuthAccessTokenService.getAccessToken(OAuthAccessTokenService.PUBLIC_SCOPE)
-                                    .retry(500)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Action1<AccessToken>() {
@@ -42,7 +48,14 @@ public class AccessTokenFacade {
                                     }, new Action1<Throwable>() {
                                         @Override
                                         public void call(Throwable throwable) {
-                                            accessTokenDelegate.onErrorInRetrievingAccessToken(throwable);
+                                            if (throwable instanceof UnknownHostException) {
+                                                dialogUtils.showConnectionError(new DialogUtils.OnRetryListener() {
+                                                    @Override
+                                                    public void onRetry() {
+                                                        getAccessToken();
+                                                    }
+                                                });
+                                            }
                                         }
                                     });
         } else {

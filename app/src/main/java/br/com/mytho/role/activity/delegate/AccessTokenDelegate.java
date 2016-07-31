@@ -6,5 +6,4 @@ package br.com.mytho.role.activity.delegate;
 
 public interface AccessTokenDelegate {
     void onReceiveAccessToken();
-    void onErrorInRetrievingAccessToken(Throwable t);
 }
