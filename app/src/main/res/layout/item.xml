@@ -31,6 +31,14 @@
 
         <!-- IMAGE AND ALL CONTENT OVER IT -->
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/upper_scrim_bg"
+            android:id="@+id/upperScrim"
+            android:layout_alignParentTop="false"></LinearLayout>
+
         <TextView
             android:id="@+id/eventName"
             android:layout_width="match_parent"
@@ -45,6 +53,15 @@
             android:textStyle="bold" />
 
         <!-- Place Icon + Text -->
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/downer_scrim_bg"
+            android:layout_above="@+id/eventSubtitle"
+            android:layout_below="@+id/eventName"
+            android:id="@+id/downerScrim" />
 
         <LinearLayout
             android:id="@+id/eventPlace"
@@ -74,6 +91,10 @@
                 android:textColor="@color/whiteText"
                 android:textSize="@dimen/text_size_small"
                 android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></FrameLayout>
 
         </LinearLayout>
 
