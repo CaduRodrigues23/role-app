@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="300dp"
+    android:orientation="vertical" android:layout_width="280dp"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:elevation="16dp"
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="225dp"
-        android:layout_weight="0.52">
+        android:layout_height="138dp"
+        android:background="@color/colorTextPlaceholder">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="225dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:id="@+id/imageView"
-            android:background="@drawable/perfil_image_2" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/downer_scrim_bg"
-            android:layout_alignParentBottom="true"
+            android:background="@drawable/perfil_image_3"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-        </LinearLayout>
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,12 +27,24 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/user_name"
             android:id="@+id/tv_nome_usuario"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:textSize="@dimen/text_title_size"
             android:textColor="@color/whiteText"
-            android:padding="16dp" />
+            android:padding="16dp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/user_email"
+            android:id="@+id/tv_email"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/whiteText"
+            android:layout_alignBottom="@+id/tv_nome_usuario"
+            android:layout_alignLeft="@+id/imageView"
+            android:layout_alignStart="@+id/imageView" />
 
     </RelativeLayout>
 
@@ -64,25 +71,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/configurations"
-            android:id="@+id/tv_configuracoes"
-            android:textSize="@dimen/text_title_size"
-            android:layout_below="@+id/tv_meus_eventos"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:padding="6dp"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/invite_friends"
             android:id="@+id/tv_convidar_amigos"
             android:textSize="@dimen/text_title_size"
-            android:layout_below="@+id/tv_configuracoes"
+            android:layout_below="@+id/tv_meus_eventos"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentStart="false"
             android:padding="6dp"
             android:layout_marginLeft="20dp" />
 
@@ -226,16 +220,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:padding="6dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/tv_configuracoes" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/logout"
-            android:id="@+id/tv_deslogar"
+            android:text="@string/configurations"
+            android:id="@+id/tv_configuracoes"
             android:textSize="@dimen/text_title_size"
-            android:layout_below="@+id/tv_termos_de_servico"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:padding="6dp"
