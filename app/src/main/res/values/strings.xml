@@ -48,6 +48,7 @@
     <string name="apply_filters">APLICAR FILTROS</string>
 
     //Navigation Drawer
+    <string name="user_email">usuario@provedor.com</string>
     <string name="my_events">Meus Eventos</string>
     <string name="configurations">Configurações</string>
     <string name="invite_friends">Convidar Amigos</string>
