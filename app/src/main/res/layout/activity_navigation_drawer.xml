@@ -8,43 +8,56 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorTextPlaceholder">
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:id="@+id/imageView"
-            android:background="@drawable/perfil_image_3"
+            android:id="@+id/iv_usuario"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="16dp" />
+            android:layout_marginLeft="16dp"
+            android:focusableInTouchMode="false"
+            android:src="@drawable/perfil_image_3"
+            android:layout_marginTop="6dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/user_name"
-            android:id="@+id/tv_nome_usuario"
-            android:textSize="@dimen/text_title_size"
-            android:textColor="@color/whiteText"
-            android:padding="16dp"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@+id/iv_usuario"
+            android:layout_marginBottom="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/user_email"
-            android:id="@+id/tv_email"
-            android:textSize="@dimen/text_size_small"
-            android:textColor="@color/whiteText"
-            android:layout_alignBottom="@+id/tv_nome_usuario"
-            android:layout_alignLeft="@+id/imageView"
-            android:layout_alignStart="@+id/imageView" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/user_name"
+                android:id="@+id/tv_nome_usuario"
+                android:textSize="@dimen/navigation_drawer_user_name"
+                android:textColor="@color/whiteText"
+                android:layout_below="@+id/iv_usuario"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/user_email"
+                android:id="@+id/tv_email"
+                android:textSize="@dimen/navigation_drawer_user_email"
+                android:textColor="@color/whiteText"
+                android:layout_alignBottom="@+id/tv_nome_usuario"
+                android:layout_alignLeft="@+id/iv_usuario"
+                android:layout_alignStart="@+id/iv_usuario"
+                android:layout_marginLeft="16dp" />
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -53,108 +66,153 @@
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/my_events"
-            android:id="@+id/tv_meus_eventos"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="@dimen/text_title_size"
-            android:layout_alignParentEnd="true"
-            android:padding="6dp"
-            android:layout_marginLeft="20dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ll_meus_eventos"
+            android:layout_marginTop="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/invite_friends"
-            android:id="@+id/tv_convidar_amigos"
-            android:textSize="@dimen/text_title_size"
-            android:layout_below="@+id/tv_meus_eventos"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="false"
-            android:padding="6dp"
-            android:layout_marginLeft="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_meus_eventos"
+                android:background="@drawable/ic_event_note_black_24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/my_events"
+                android:id="@+id/tv_meus_eventos"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:layout_alignParentEnd="true"
+                android:padding="6dp"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ll_convidar_amigos"
+            android:layout_below="@+id/ll_meus_eventos">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_convidar_amigos"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_group_add_black_24dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/invite_friends"
+                android:id="@+id/tv_convidar_amigos"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:layout_below="@+id/tv_meus_eventos"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="false"
+                android:padding="6dp"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="fill_parent"
             android:layout_height="@dimen/lines_size"
             android:id="@+id/horizontalLine1"
             android:background="@color/colorDivider"
-            android:layout_below="@+id/tv_convidar_amigos"
+            android:layout_below="@+id/ll_convidar_amigos"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+            android:layout_marginTop="@dimen/navigation_drawer_context_space"
+            android:layout_marginBottom="@dimen/navigation_drawer_context_space" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/like"
-            android:id="@+id/tv_curtir"
-            android:textSize="@dimen/text_title_size"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="false"
+            android:id="@+id/ll_curtir">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_curtir"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_thumb_up_black_24dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/like"
+                android:id="@+id/tv_curtir"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="0dp"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp"
+                android:padding="6dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp" />
+            android:id="@+id/ll_avaliar"
+            android:layout_below="@+id/ll_curtir">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/like_description"
-            android:id="@+id/tv_curtir_descricao"
-            android:layout_below="@+id/tv_curtir"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="6dp"
-            android:layout_marginLeft="20dp"
-            android:textSize="@dimen/text_size_small" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_avaliar"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_star_border_black_24dp"
+                android:alpha=".54" />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/rate"
+                android:id="@+id/tv_avaliar"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:padding="6dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_curtir"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="6dp">
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/rate"
-            android:id="@+id/tv_avaliar"
-            android:textSize="@dimen/text_title_size"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/rate_description"
-            android:id="@+id/tv_avaliar_descricao"
-            android:layout_below="@+id/tv_avaliar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="6dp"
-            android:layout_marginLeft="20dp"
-            android:textSize="@dimen/text_size_small" />
     </RelativeLayout>
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -165,8 +223,8 @@
         android:layout_below="@+id/tv_avaliar_descricao"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+        android:layout_marginTop="@dimen/navigation_drawer_context_space"
+        android:layout_marginBottom="@dimen/navigation_drawer_context_space" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -176,18 +234,34 @@
         android:layout_alignParentStart="true"
         android:id="@+id/relativeLayout4">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/notifications"
-            android:id="@+id/cb_notificacoes"
-            android:checked="false"
-            android:padding="6dp"
-            android:textSize="@dimen/text_title_size"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ll_notificacoes">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_notificacoes"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_notifications_black_24dp"
+                android:alpha="0.54"
+                android:adjustViewBounds="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/notifications"
+                android:id="@+id/tv_notificacoes"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp"
+                android:padding="6dp" />
+        </LinearLayout>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="fill_parent"
@@ -196,10 +270,10 @@
             android:background="@color/colorDivider"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="false"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/navigation_drawer_context_space"
+            android:layout_marginBottom="@dimen/navigation_drawer_context_space"
             android:layout_alignParentEnd="false"
-            android:layout_below="@+id/cb_notificacoes" />
+            android:layout_below="@+id/ll_notificacoes" />
 
     </RelativeLayout>
 
@@ -210,30 +284,103 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/service_terms"
-            android:id="@+id/tv_termos_de_servico"
-            android:textSize="@dimen/text_title_size"
-            android:layout_alignParentLeft="true"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_alignParentStart="true"
-            android:padding="6dp"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@+id/tv_configuracoes" />
+            android:id="@+id/ll_configuracoes">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/configurations"
-            android:id="@+id/tv_configuracoes"
-            android:textSize="@dimen/text_title_size"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:padding="6dp"
-            android:layout_marginLeft="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_configuracoes"
+                android:background="@drawable/ic_settings_black_24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/configurations"
+                android:id="@+id/tv_configuracoes"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:padding="6dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/iv_icone_configuracoes"
+                android:layout_toEndOf="@+id/iv_icone_configuracoes"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ll_termos_de_servico"
+            android:layout_below="@+id/ll_configuracoes">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_termos_de_servico"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_description_black_24dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/service_terms"
+                android:id="@+id/tv_termos_de_servico"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:padding="6dp"
+                android:layout_below="@+id/tv_configuracoes"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ll_deslogar"
+            android:layout_below="@+id/ll_termos_de_servico">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icone_deslogar"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/ic_close_black_24dp"
+                android:adjustViewBounds="false"
+                android:layout_marginTop="8dp"
+                android:alpha=".54" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/logout"
+                android:id="@+id/tv_deslogar"
+                android:textSize="@dimen/navigation_drawer_list_item"
+                android:padding="6dp"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_termos_de_servico"
+                android:textColor="@color/colorListItemNavigationDrawer"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>
