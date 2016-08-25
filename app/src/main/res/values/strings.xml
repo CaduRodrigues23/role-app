@@ -52,9 +52,9 @@
     <string name="my_events">Meus Eventos</string>
     <string name="configurations">Configurações</string>
     <string name="invite_friends">Convidar Amigos</string>
-    <string name="like">Curtir</string>
+    <string name="like">Curtir no Facebook</string>
     <string name="like_description">Curta a página no Facebook</string>
-    <string name="rate">Avaliar</string>
+    <string name="rate">Avaliar na Google Play</string>
     <string name="rate_description">Avalie no Google Play</string>
     <string name="notifications">Notificações</string>
     <string name="service_terms">Termos de Serviço</string>

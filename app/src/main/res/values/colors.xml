@@ -24,5 +24,7 @@
     <color name="eventFlagsRed">#B3FF1744</color>
 
     <color name="colorDivider">#1f000000</color>
+    <color name="colorListItemNavigationDrawer">#de000000</color>
+
 
 </resources>
