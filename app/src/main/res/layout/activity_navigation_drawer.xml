@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTextPlaceholder">
+        android:background="@color/backgroundDefault">
 
         <ImageView
             android:layout_width="56dp"
