@@ -1,20 +1,25 @@
 package br.com.mytho.role.domain.service;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
+import br.com.mytho.role.infra.exception.UnavailableException;
 import br.com.mytho.role.model.Event;
 import br.com.mytho.role.security.model.AccessToken;
 import br.com.mytho.role.security.model.repository.AccessTokenRepository;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -59,7 +64,12 @@ public interface EventService {
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
-                    return chain.proceed(request);
+                    try {
+                        return chain.proceed(request);
+                    } catch(SocketTimeoutException exception) {
+                        EventBus.getDefault().post(new UnavailableException());
+                        return null;
+                    }
                 }
             });
 
@@ -76,7 +86,10 @@ public interface EventService {
 //            });
 
 
-            Retrofit retrofit = builder.client(httpClient.build()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+            Retrofit retrofit = builder.client(httpClient.build())
+                                       .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                       .build();
+
             return retrofit.create(EventService.class);
         }
     }

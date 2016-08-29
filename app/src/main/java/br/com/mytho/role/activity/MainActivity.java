@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -34,15 +35,20 @@ import br.com.mytho.role.facade.EventFacade;
 import br.com.mytho.role.fragments.HighlightedFragment;
 import br.com.mytho.role.fragments.NearYouFragment;
 import br.com.mytho.role.fragments.SuggestedFragment;
+import br.com.mytho.role.infra.exception.ConnectionErrorException;
+import br.com.mytho.role.infra.exception.HTTPUnauthorizedException;
+import br.com.mytho.role.infra.exception.UnavailableException;
 import br.com.mytho.role.model.Event;
+import br.com.mytho.role.security.model.AccessToken;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import utils.DialogUtils;
 
 
 /**
  * Created by leonardocordeiro on 26/06/16.
  */
-public class MainActivity extends AppCompatActivity implements AccessTokenDelegate, EventDelegate {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_main)
     Toolbar toolbar;
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements AccessTokenDelega
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
+
+    private DialogUtils dialogUtils;
 
     private ArrayList<Event> events;
     private AccessTokenFacade accessTokenFacade;
@@ -59,33 +67,61 @@ public class MainActivity extends AppCompatActivity implements AccessTokenDelega
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.accessTokenFacade = new AccessTokenFacade(this);
-        accessTokenFacade.getAccessToken();
+        dialogUtils = new DialogUtils(this);
+
+        EventBus.getDefault().register(this);
+
+        getAccessToken();
 
         ButterKnife.bind(this);
 
         setupToolbar();
         setupNavigationDrawer();
 
-        EventBus.getDefault().register(this);
     }
 
     @Subscribe
-    public void handleUnauthorize(Throwable t) {
+    public void handle(UnavailableException exception) {
+        getAccessToken();
+    }
+
+    @Subscribe
+    public void handle(HTTPUnauthorizedException exception) {
         accessTokenFacade.retry();
     }
 
-    @Override
-    public void onReceiveAccessToken() {
+    @Subscribe
+    public void handle(ConnectionErrorException exception) {
+        dialogUtils.showConnectionError(new DialogUtils.OnRetryListener() {
+            @Override
+            public void onRetry() {
+                accessTokenFacade.getAccessToken();
+            }
+        });
+    }
+
+    @Subscribe
+    public void onReceiveAccessToken(AccessToken accessToken) {
         EventFacade eventFacade = new EventFacade(this);
         eventFacade.getEvents();
     }
 
-
-    @Override
+    @Subscribe
     public void onEvents(List<Event> events) {
         this.events = (ArrayList<Event>) events;
         setupViewPager();
+    }
+
+    private void getAccessToken() {
+        this.accessTokenFacade = new AccessTokenFacade(this);
+        accessTokenFacade.getAccessToken();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     private void setupToolbar() {

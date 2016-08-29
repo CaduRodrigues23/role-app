@@ -5,9 +5,13 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.net.SocketTimeoutException;
 
+import br.com.mytho.role.infra.exception.UnavailableException;
 import br.com.mytho.role.security.model.AccessToken;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -31,7 +35,7 @@ public interface OAuthAccessTokenService {
     String PUBLIC_SCOPE = "public-area";
 
     @FormUrlEncoded
-    @POST("oauth/token?grant_type=client_credentials")
+    @POST("oauth/token?grant_type=" + GRANT_TYPE)
     Observable<AccessToken> getAccessToken(
             @Field("scope") String scope);
     class Builder {
@@ -58,7 +62,12 @@ public interface OAuthAccessTokenService {
                            .method(original.method(), original.body());
 
                     Request request = builder.build();
-                    return chain.proceed(request);
+                    try {
+                        return chain.proceed(request);
+                    } catch(SocketTimeoutException exception) {
+                        EventBus.getDefault().post(new UnavailableException());
+                        return null;
+                    }
                 }
             });
 
@@ -66,7 +75,6 @@ public interface OAuthAccessTokenService {
             Retrofit retrofit = builder.client(okHttpClient)
                                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                                        .build();
-
 
             return retrofit.create(OAuthAccessTokenService.class);
 

@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 import br.com.mytho.role.activity.delegate.AccessTokenDelegate;
+import br.com.mytho.role.infra.exception.ConnectionErrorException;
 import br.com.mytho.role.security.OAuthAccessTokenService;
 import br.com.mytho.role.security.model.AccessToken;
 import br.com.mytho.role.security.model.repository.AccessTokenRepository;
@@ -24,14 +27,13 @@ import utils.DialogUtils;
 
 public class AccessTokenFacade {
 
+    private Context context;
     private AccessTokenRepository tokenRepository;
-    private AccessTokenDelegate accessTokenDelegate;
     private DialogUtils dialogUtils;
 
-    public AccessTokenFacade(AccessTokenDelegate accessTokenDelegate) {
-        this.accessTokenDelegate = accessTokenDelegate;
+    public AccessTokenFacade(Context context) {
+        this.context = context;
 
-        Context context = (Context) accessTokenDelegate;
         this.tokenRepository = new AccessTokenRepository(context);
         this.dialogUtils = new DialogUtils(context);
     }
@@ -47,27 +49,20 @@ public class AccessTokenFacade {
                                         @Override
                                         public void call(AccessToken accessToken) {
                                             tokenRepository.save(accessToken);
-                                            accessTokenDelegate.onReceiveAccessToken();
-
+                                            EventBus.getDefault().post(accessToken);
                                         }
                                     }, new Action1<Throwable>() {
                                         @Override
                                         public void call(Throwable throwable) {
                                             if (throwable instanceof UnknownHostException) {
-                                                dialogUtils.showConnectionError(new DialogUtils.OnRetryListener() {
-                                                    @Override
-                                                    public void onRetry() {
-                                                        getAccessToken();
-                                                    }
-                                                });
+                                                EventBus.getDefault().post(new ConnectionErrorException());
                                             } else {
                                                 getAccessToken();
-
                                             }
                                         }
                                     });
         } else {
-            accessTokenDelegate.onReceiveAccessToken();
+            EventBus.getDefault().post(new AccessToken());
         }
     }
 
