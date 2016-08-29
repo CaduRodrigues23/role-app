@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundDefault">
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:layout_width="56dp"
@@ -20,8 +20,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginLeft="16dp"
             android:focusableInTouchMode="false"
-            android:src="@drawable/perfil_image_3"
-            android:layout_marginTop="6dp" />
+            android:layout_marginTop="6dp"
+            android:background="@drawable/user_icon_template" />
 
         <LinearLayout
             android:orientation="vertical"
