@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
-    private static String LOADING_FRAGMENT_TAG = "loading";
-
     private DialogUtils dialogUtils;
 
     private ArrayList<Event> events;
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         loadingFragment = new LoadingFragment();
-        getFragmentManager().beginTransaction().add(android.R.id.content, loadingFragment, LOADING_FRAGMENT_TAG).commit();
+        getFragmentManager().beginTransaction().add(android.R.id.content, loadingFragment).commit();
 
         dialogUtils = new DialogUtils(this);
 
