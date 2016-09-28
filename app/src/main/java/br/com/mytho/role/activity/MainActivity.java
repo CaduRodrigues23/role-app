@@ -1,5 +1,6 @@
 package br.com.mytho.role.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -33,6 +34,7 @@ import br.com.mytho.role.adapter.ViewPagerAdapter;
 import br.com.mytho.role.facade.AccessTokenFacade;
 import br.com.mytho.role.facade.EventFacade;
 import br.com.mytho.role.fragments.HighlightedFragment;
+import br.com.mytho.role.fragments.LoadingFragment;
 import br.com.mytho.role.fragments.NearYouFragment;
 import br.com.mytho.role.fragments.SuggestedFragment;
 import br.com.mytho.role.infra.exception.ConnectionErrorException;
@@ -57,15 +59,22 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
+    private static String LOADING_FRAGMENT_TAG = "loading";
+
     private DialogUtils dialogUtils;
 
     private ArrayList<Event> events;
     private AccessTokenFacade accessTokenFacade;
 
+    private LoadingFragment loadingFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        loadingFragment = new LoadingFragment();
+        getFragmentManager().beginTransaction().add(android.R.id.content, loadingFragment, LOADING_FRAGMENT_TAG).commit();
 
         dialogUtils = new DialogUtils(this);
 
@@ -191,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
+        getFragmentManager().beginTransaction().remove(loadingFragment).commit();
+
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Bundle bundle = new Bundle();
